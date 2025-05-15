@@ -164,6 +164,13 @@ class Symbol(ToStringMixin):
 
         if location:
             result["location"] = self.location.to_dict()
+            # Add end position information
+            if hasattr(self, "body_end_position") and self.body_end_position:
+                result["end_location"] = {
+                    "relative_path": self.relative_path,
+                    "line": self.body_end_position["line"],
+                    "column": self.body_end_position["character"]
+                }
 
         if include_body:
             if self.body is None:
